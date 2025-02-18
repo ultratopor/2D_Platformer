@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Mechanics;
+using Unity.Cinemachine;
 
 namespace Model
 {
@@ -11,7 +13,7 @@ namespace Model
     public class PlatformerModel
     {
  
-        public Cinemachine.CinemachineVirtualCamera virtualCamera;
+        public CinemachineCamera virtualCamera;
 
         public PlayerController player;
 

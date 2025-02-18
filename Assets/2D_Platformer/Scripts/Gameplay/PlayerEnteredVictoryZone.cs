@@ -1,5 +1,6 @@
 ﻿using Core;
 using Model;
+using Mechanics;
 
 namespace Gameplay
 {
@@ -11,8 +12,8 @@ namespace Gameplay
 
         public override void Execute()
         {
-            model.player.animator.SetTrigger("victory");
-            model.player.controlEnabled = false;
+            model.player.Animator.SetTrigger("victory");
+            model.player.ControlEnabled = false;
         }
     }
 }

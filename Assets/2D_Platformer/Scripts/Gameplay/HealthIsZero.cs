@@ -1,4 +1,5 @@
 ﻿using Core;
+using Mechanics;
 
 namespace Gameplay
 {
@@ -8,7 +9,7 @@ namespace Gameplay
 
         public override void Execute()
         {
-            Schedule<PlayerDeath>();
+            Simulation.Schedule<PlayerDeath>();
         }
     }
 }

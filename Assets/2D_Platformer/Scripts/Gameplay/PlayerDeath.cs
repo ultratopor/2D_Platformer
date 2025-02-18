@@ -10,18 +10,18 @@ namespace Gameplay
         public override void Execute()
         {
             var player = model.player;
-            if (player.health.IsAlive)
+            if (player.Health.IsAlive)
             {
-                player.health.Die();
-                model.virtualCamera.m_Follow = null;
-                model.virtualCamera.m_LookAt = null;
+                player.Health.Die();
+                model.virtualCamera.Follow = null;
+                model.virtualCamera.LookAt = null;
                 // player.collider.enabled = false;
-                player.controlEnabled = false;
+                player.ControlEnabled = false;
 
-                if (player.audioSource && player.ouchAudio)
-                    player.audioSource.PlayOneShot(player.ouchAudio);
-                player.animator.SetTrigger("hurt");
-                player.animator.SetBool("dead", true);
+                if (player.AudioSource && player.OuchAudio)
+                    player.AudioSource.PlayOneShot(player.OuchAudio);
+                player.Animator.SetTrigger("hurt");
+                player.Animator.SetBool("dead", true);
                 Simulation.Schedule<PlayerSpawn>(2);
             }
         }

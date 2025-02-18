@@ -1,5 +1,6 @@
 ﻿using Core;
 using Model;
+using Mechanics;
 
 namespace Gameplay
 {
@@ -22,7 +23,7 @@ namespace Gameplay
                     enemyHealth.Decrement();
                     if (!enemyHealth.IsAlive)
                     {
-                        Schedule<EnemyDeath>().enemy = enemy;
+                        Simulation.Schedule<EnemyDeath>().enemy = enemy;
                         player.Bounce(2);
                     }
                     else
@@ -32,13 +33,13 @@ namespace Gameplay
                 }
                 else
                 {
-                    Schedule<EnemyDeath>().enemy = enemy;
+                    Simulation.Schedule<EnemyDeath>().enemy = enemy;
                     player.Bounce(2);
                 }
             }
             else
             {
-                Schedule<PlayerDeath>();
+                Simulation.Schedule<PlayerDeath>();
             }
         }
     }

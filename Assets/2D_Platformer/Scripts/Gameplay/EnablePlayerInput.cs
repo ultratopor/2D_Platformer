@@ -10,7 +10,7 @@ namespace Gameplay
         public override void Execute()
         {
             var player = _model.player;
-            player.controlEnabled = true;
+            player.ControlEnabled = true;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core;
+using Mechanics;
 
 namespace Gameplay
 {
@@ -8,8 +9,8 @@ namespace Gameplay
 
         public override void Execute()
         {
-            if (player.audioSource && player.jumpAudio)
-                player.audioSource.PlayOneShot(player.jumpAudio);
+            if (player.AudioSource && player.JumpAudio)
+                player.AudioSource.PlayOneShot(player.JumpAudio);
         }
     }
 }
