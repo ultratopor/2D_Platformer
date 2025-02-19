@@ -6,35 +6,35 @@ namespace Gameplay
 {
     public class PlayerEnemyCollision : Event<PlayerEnemyCollision>
     {
-        public EnemyController enemy;
-        public PlayerController player;
+        public EnemyController Enemy;
+        public PlayerController Player;
 
-        PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        private PlatformerModel _model = Simulation.GetModel<PlatformerModel>();
 
         public override void Execute()
         {
-            var willHurtEnemy = player.Bounds.center.y >= enemy.Bounds.max.y;
+            var willHurtEnemy = Player.Bounds.center.y >= Enemy.Bounds.max.y;
 
             if (willHurtEnemy)
             {
-                var enemyHealth = enemy.GetComponent<Health>();
+                var enemyHealth = Enemy.GetComponent<Health>();
                 if (enemyHealth != null)
                 {
                     enemyHealth.Decrement();
                     if (!enemyHealth.IsAlive)
                     {
-                        Simulation.Schedule<EnemyDeath>().enemy = enemy;
-                        player.Bounce(2);
+                        Simulation.Schedule<EnemyDeath>().Enemy = Enemy;
+                        Player.Bounce(2);
                     }
                     else
                     {
-                        player.Bounce(7);
+                        Player.Bounce(7);
                     }
                 }
                 else
                 {
-                    Simulation.Schedule<EnemyDeath>().enemy = enemy;
-                    player.Bounce(2);
+                    Simulation.Schedule<EnemyDeath>().Enemy = Enemy;
+                    Player.Bounce(2);
                 }
             }
             else

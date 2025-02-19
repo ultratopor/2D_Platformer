@@ -13,21 +13,21 @@ namespace Model
     public class PlatformerModel
     {
  
-        public CinemachineCamera virtualCamera;
+        public CinemachineCamera VirtualCamera;
 
-        public PlayerController player;
+        public PlayerController Player;
 
-        public Transform spawnPoint;
+        public Transform SpawnPoint;
 
         /// <summary>
         /// Усилитель прыжка
         /// </summary>
-        public float jumpModifier = 1.5f;
+        public float JumpModifier = 1.5f;
 
         /// <summary>
         /// Модификатор падения после прыжка
         /// </summary>
-        public float jumpDeceleration = 0.5f;
+        public float JumpDeceleration = 0.5f;
 
     }
 }

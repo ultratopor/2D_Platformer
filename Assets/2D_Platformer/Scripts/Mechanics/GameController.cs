@@ -4,9 +4,12 @@ using Model;
 
 namespace Mechanics
 {
+    /// <summary>
+    /// Доисторический синглтон
+    /// </summary>
     public class GameController : MonoBehaviour
     {
-        public static GameController Instance { get; private set; }
+        private static GameController Instance { get; set; }
 
         /*Это поле модели является общедоступным, поэтому его можно изменить в инспекторе.
         Ссылка на самом деле поступает из InstanceRegister и используется совместно в симуляции и событиях.
@@ -14,17 +17,17 @@ namespace Mechanics
         что позволяет удобно настраивать модель в инспекторе.*/
         public PlatformerModel Model = Simulation.GetModel<PlatformerModel>();
 
-        void OnEnable()
+        private void OnEnable()
         {
             Instance = this;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (Instance == this) Instance = null;
         }
 
-        void Update()
+        private void Update()
         {
             if (Instance == this) Simulation.Tick();
         }

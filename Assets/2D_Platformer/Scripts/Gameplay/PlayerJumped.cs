@@ -5,12 +5,12 @@ namespace Gameplay
 {
     public class PlayerJumped : Event<PlayerJumped>
     {
-        public PlayerController player;
+        public PlayerController Player;
 
         public override void Execute()
         {
-            if (player.AudioSource && player.JumpAudio)
-                player.AudioSource.PlayOneShot(player.JumpAudio);
+            if (Player.AudioSource && Player.JumpAudio)
+                Player.AudioSource.PlayOneShot(Player.JumpAudio);
         }
     }
 }

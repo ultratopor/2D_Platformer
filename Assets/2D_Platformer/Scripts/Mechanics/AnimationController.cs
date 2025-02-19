@@ -1,76 +1,71 @@
 ﻿using UnityEngine;
 using Model;
 using Core;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Mechanics
 {
-    /// <summary>
-    /// AnimationController объединяет физику и анимацию. Обычно он используется для простой анимации врагов.
-    /// </summary>
     [RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
     public class AnimationController : KinematicObject
     {
         /// <summary>
         /// Максимальная скорость передвижения
         /// </summary>
-        public float maxSpeed = 7;
+        public float MaxSpeed = 7;
         /// <summary>
         /// Максимальная скорость прыжка
         /// </summary>
-        public float jumpTakeOffSpeed = 7;
+        public float JumpTakeOffSpeed = 7;
 
         /// <summary>
         /// Используется для указания желаемого направления движения.
         /// </summary>
-        public Vector2 move;
+        public Vector2 Move;
 
         /// <summary>
         /// Состояние прыжка
         /// </summary>
-        public bool jump;
+        public bool Jump;
 
         /// <summary>
-        /// Установите значение true, чтобы обнулить текущую скорость прыжка.
+        /// Обнуление прыжка
         /// </summary>
-        public bool stopJump;
+        public bool StopJump;
 
-        SpriteRenderer spriteRenderer;
-        Animator animator;
-        PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
+        private PlatformerModel _model = Simulation.GetModel<PlatformerModel>();
 
         protected virtual void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            animator = GetComponent<Animator>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _animator = GetComponent<Animator>();
         }
 
         protected override void ComputeVelocity()
         {
-            if (jump && IsGrounded)
+            if (Jump && IsGrounded)
             {
-                velocity.y = jumpTakeOffSpeed * model.jumpModifier;
-                jump = false;
+                Velocity.y = JumpTakeOffSpeed * _model.JumpModifier;
+                Jump = false;
             }
-            else if (stopJump)
+            else if (StopJump)
             {
-                stopJump = false;
-                if (velocity.y > 0)
+                StopJump = false;
+                if (Velocity.y > 0)
                 {
-                    velocity.y = velocity.y * model.jumpDeceleration;
+                    Velocity.y *= _model.JumpDeceleration;
                 }
             }
+            // поворот модели в сторону движения
+            if (Move.x > 0.01f)
+                _spriteRenderer.flipX = false;
+            else if (Move.x < -0.01f)
+                _spriteRenderer.flipX = true;
 
-            if (move.x > 0.01f)
-                spriteRenderer.flipX = false;
-            else if (move.x < -0.01f)
-                spriteRenderer.flipX = true;
+            _animator.SetBool("grounded", IsGrounded);
+            _animator.SetFloat("velocityX", Mathf.Abs(Velocity.x) / MaxSpeed);
 
-            animator.SetBool("grounded", IsGrounded);
-            animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
-
-            targetVelocity = move * maxSpeed;
+            TargetVelocity = Move * MaxSpeed;
         }
     }
 }

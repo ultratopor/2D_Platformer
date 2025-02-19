@@ -12,8 +12,8 @@ namespace Gameplay
 
         public override void Execute()
         {
-            model.player.Animator.SetTrigger("victory");
-            model.player.ControlEnabled = false;
+            model.Player.PlayerAnimator.SetTrigger("victory");
+            model.Player.ControlEnabled = false;
         }
     }
 }
