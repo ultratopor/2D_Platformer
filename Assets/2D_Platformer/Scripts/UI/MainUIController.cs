@@ -3,7 +3,7 @@
 namespace Platformer.UI
 {
     /// <summary>
-    /// Переключатель канвасов
+    /// Переключатель панелей в меню
     /// </summary>
     public class MainUIController : MonoBehaviour
     {

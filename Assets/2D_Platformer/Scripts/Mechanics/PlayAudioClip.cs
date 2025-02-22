@@ -5,30 +5,26 @@ namespace Mechanics
     public class PlayAudioClip : StateMachineBehaviour
     {
         /// <summary>
-        /// Точка в нормализованном времени, в которую должен воспроизводиться клип.
+        /// В какой момент анимации будет воспроизводиться клип
         /// </summary>
-        public float t = 0.5f;
+        [SerializeField] private float _normalizeTime = 0.5f;
 
         /// <summary>
-        /// Если значение больше нуля, то нормализованное время будет равно (нормализованноеВремя % модуль). 
-        /// Это используется для повторения аудиоклипа при зацикливании состояния анимации.
+        /// Зацикливание клипа
         /// </summary>
-        public float modulus = 0f;
+        [SerializeField] private float _modulus = 0f;
 
-        /// <summary>
-        /// Аудиоклип, который будет воспроизводиться.
-        /// </summary>
-        public AudioClip clip;
+        [SerializeField] private AudioClip _clip;
 
-        float last_t = -1f;
+        private float _lastT = -1f;
 
-        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             var nt = stateInfo.normalizedTime;
-            if (modulus > 0f) nt %= modulus;
-            if (nt >= t && last_t < t)
-                AudioSource.PlayClipAtPoint(clip, animator.transform.position);
-            last_t = nt;
+            if (_modulus > 0f) nt %= _modulus;
+            if (nt >= _normalizeTime && _lastT < _normalizeTime)
+                AudioSource.PlayClipAtPoint(_clip, animator.transform.position);
+            _lastT = nt;
         }
     }
 }

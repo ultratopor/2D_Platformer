@@ -5,7 +5,7 @@ namespace Gameplay
 {
     public class PlayerLanded : Event<PlayerLanded>
     {
-        public PlayerController player;
+        public PlayerController Player;
         public override void Execute()
         {
             // звуки опускания на земную твердь

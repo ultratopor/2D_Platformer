@@ -9,11 +9,9 @@ namespace Mechanics
         private void OnTriggerEnter2D(Collider2D collider)
         {
             var p = collider.gameObject.GetComponent<PlayerController>();
-            if (p != null)
-            {
-                var ev = Simulation.Schedule<PlayerEnteredVictoryZone>();
-                ev.victoryZone = this;
-            }
+            if (p == null) return;
+            var ev = Simulation.Schedule<PlayerEnteredVictoryZone>();
+            ev.VictoryZone = this;
         }
     }
 }

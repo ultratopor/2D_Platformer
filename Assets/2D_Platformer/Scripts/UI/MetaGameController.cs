@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 namespace Platformer.UI
 {
     /// <summary>
-    /// Переключатель меню
+    /// Переключатель канвасов
     /// </summary>
     public class MetaGameController : MonoBehaviour
     {
@@ -23,12 +23,17 @@ namespace Platformer.UI
         private void OnEnable()
         {
             SwitchMainMenu(_showMainCanvas);
+            
+        }
+
+        private void Start()
+        {
             _model.Player.Input.Player.MenuPlay.performed += OnEcsPressed;
         }
 
         private void OnEcsPressed(InputAction.CallbackContext obj)
         {
-            ToggleMainMenu(_showMainCanvas);
+            ToggleMainMenu();
         }
 
         private void OnDisable()
@@ -37,15 +42,11 @@ namespace Platformer.UI
         }
 
         /// <summary>
-        /// Вкл/выкл гав меню, если внутренне состояние отличается от внешнего
+        /// Вкл/выкл гав меню
         /// </summary>
-        /// <param name="show">Булка, указывающая на вкл/выкл</param>
-        private void ToggleMainMenu(bool show)
+        public void ToggleMainMenu()
         {
-            if (_showMainCanvas != show)
-            {
-                SwitchMainMenu(show);
-            }
+            SwitchMainMenu(!_showMainCanvas);
         }
     
         /// <summary>

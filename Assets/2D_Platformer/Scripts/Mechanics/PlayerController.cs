@@ -108,7 +108,7 @@ namespace Mechanics
                 case JumpState.InFlight:
                     if (IsGrounded)
                     {
-                        Simulation.Schedule<PlayerLanded>().player = this;
+                        Simulation.Schedule<PlayerLanded>().Player = this;
                         PlayerJumpState = JumpState.Landed;
                     }
                     break;

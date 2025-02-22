@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Mechanics;
+using Platformer.UI;
 using Unity.Cinemachine;
 
 namespace Model
@@ -11,12 +12,11 @@ namespace Model
     [System.Serializable]
     public class PlatformerModel
     {
- 
         public CinemachineCamera VirtualCamera;
-
         public PlayerController Player;
-
         public Transform SpawnPoint;
+        public MetaGameController MetaGameController;
+        public MainUIController UIController;
 
         /// <summary>
         /// Усилитель прыжка

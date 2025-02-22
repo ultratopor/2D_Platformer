@@ -42,12 +42,6 @@ public abstract class Event : System.IComparable<Event>
     }
 }
 
-/// <summary>
-/// Event<T> добавляет возможность подключаться к обратному вызову OnExecute
-/// при каждом выполнении события.Используйте этот класс, чтобы подключать функции
-/// к вашему приложению с минимальной или нулевой настройкой.
-/// </summary>
-/// <typeparam name="T"></typeparam>
 public abstract class Event<T> : Event where T : Event<T>
 {
     public static System.Action<T> OnExecute;
