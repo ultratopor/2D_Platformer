@@ -11,6 +11,7 @@ namespace Gameplay
         {
             Enemy.Collider.enabled = false;
             Enemy.Control.enabled = false;
+            Enemy.Control.Animator.SetTrigger("dead");
             if (Enemy.Audio && Enemy.Ouch)
                 Enemy.Audio.PlayOneShot(Enemy.Ouch);
         }

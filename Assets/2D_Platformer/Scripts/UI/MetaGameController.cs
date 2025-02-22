@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-using Mechanics;
+using Model;
+using Core;
+using UnityEngine.InputSystem;
 
 namespace Platformer.UI
 {
@@ -8,9 +10,6 @@ namespace Platformer.UI
     /// </summary>
     public class MetaGameController : MonoBehaviour
     {
-        /// <summary>
-        /// Главное меню
-        /// </summary>
         [SerializeField] private MainUIController _mainMenu;
 
         /// <summary>
@@ -18,13 +17,23 @@ namespace Platformer.UI
         /// </summary>
         [SerializeField] private Canvas[] _gamePlayCanvases;
 
-        [SerializeField] private GameController _gameController;
-
-        private bool showMainCanvas = false;
+        private readonly PlatformerModel _model = Simulation.GetModel<PlatformerModel>();
+        private bool _showMainCanvas = false;
 
         private void OnEnable()
         {
-            SwitchMainMenu(showMainCanvas);
+            SwitchMainMenu(_showMainCanvas);
+            _model.Player.Input.Player.MenuPlay.performed += OnEcsPressed;
+        }
+
+        private void OnEcsPressed(InputAction.CallbackContext obj)
+        {
+            ToggleMainMenu(_showMainCanvas);
+        }
+
+        private void OnDisable()
+        {
+            _model.Player.Input.Player.MenuPlay.performed -= OnEcsPressed;
         }
 
         /// <summary>
@@ -33,7 +42,7 @@ namespace Platformer.UI
         /// <param name="show">Булка, указывающая на вкл/выкл</param>
         private void ToggleMainMenu(bool show)
         {
-            if (showMainCanvas != show)
+            if (_showMainCanvas != show)
             {
                 SwitchMainMenu(show);
             }
@@ -57,16 +66,7 @@ namespace Platformer.UI
                 _mainMenu.gameObject.SetActive(false);
                 foreach (var i in _gamePlayCanvases) i.gameObject.SetActive(true);
             }
-            this.showMainCanvas = show;
+            _showMainCanvas = show;
         }
-
-        private void Update()
-        {
-            if (Input.GetButtonDown("Menu"))
-            {
-                ToggleMainMenu(show: !showMainCanvas);
-            }
-        }
-
     }
 }

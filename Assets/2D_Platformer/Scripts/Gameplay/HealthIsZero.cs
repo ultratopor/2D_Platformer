@@ -5,7 +5,7 @@ namespace Gameplay
 {
     public class HealthIsZero : Event<HealthIsZero>
     {
-        public Health health;
+        public Health Health;
 
         public override void Execute()
         {

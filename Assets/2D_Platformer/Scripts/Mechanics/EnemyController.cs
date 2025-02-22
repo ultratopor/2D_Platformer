@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Gameplay;
 using Core;
-using UnityEngine.Serialization;
 
 namespace Mechanics
 {
@@ -11,11 +10,11 @@ namespace Mechanics
         public PatrolPath Path;
         public AudioClip Ouch;
         [HideInInspector] public AnimationController Control;
-        [HideInInspector] public Collider2D Collider;
+         public Collider2D Collider;
         [HideInInspector] public AudioSource Audio;
 
         private Mover _mover;
-        private SpriteRenderer _spriteRenderer;
+        //private SpriteRenderer _spriteRenderer;
 
         public Bounds Bounds => Collider.bounds;
 
@@ -24,7 +23,7 @@ namespace Mechanics
             Control = GetComponent<AnimationController>();
             Collider = GetComponent<Collider2D>();
             Audio = GetComponent<AudioSource>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
+            //_spriteRenderer = GetComponent<SpriteRenderer>();
             
             if(Path is null) Debug.LogError("EnemyController: Path is null");
         }

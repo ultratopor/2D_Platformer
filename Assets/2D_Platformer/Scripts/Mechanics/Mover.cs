@@ -2,31 +2,31 @@
 
 namespace Mechanics
 {
+    /// <summary>
+    /// Нашёптывает доисторическому врагу, чтобы он бездумно челночил между двумя точками.
+    /// </summary>
     public class Mover
     {
-        PatrolPath path;
-        float p = 0;
-        float duration;
-        float startTime;
+        private readonly PatrolPath _path;
+        private float _position = 0;
+        private readonly float _duration;
+        private readonly float _startTime;
 
-        public Mover(PatrolPath path, float speed)
-        {
-            this.path = path;
-            this.duration = (path.endPosition - path.startPosition).magnitude / speed;
-            this.startTime = Time.time;
-        }
-
-        /// <summary>
-        /// Получите положение движка для текущего кадра.
-        /// </summary>
-        /// <value></value>
         public Vector2 Position
         {
             get
             {
-                p = Mathf.InverseLerp(0, duration, Mathf.PingPong(Time.time - startTime, duration));
-                return path.transform.TransformPoint(Vector2.Lerp(path.startPosition, path.endPosition, p));
+                _position = Mathf.InverseLerp(0, _duration, Mathf.PingPong(Time.time - _startTime, _duration));
+                return _path.transform.TransformPoint(Vector2.Lerp(_path.StartPosition, _path.EndPosition, _position));
             }
         }
+        
+        public Mover(PatrolPath path, float speed)
+        {
+            this._path = path;
+            this._duration = (path.EndPosition - path.StartPosition).magnitude / speed;
+            this._startTime = Time.time;
+        }
+
     }
 }

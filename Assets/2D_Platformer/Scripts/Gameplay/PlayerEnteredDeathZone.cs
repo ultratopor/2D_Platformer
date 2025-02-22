@@ -6,9 +6,9 @@ namespace Gameplay
 {
     public class PlayerEnteredDeathZone : Event<PlayerEnteredDeathZone>
     {
-        public DeathZone deathzone;
+        public DeathZone Deathzone;
 
-        PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        //PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
         public override void Execute()
         {

@@ -15,6 +15,7 @@ namespace Mechanics
         [HideInInspector] public AudioSource AudioSource;
         [HideInInspector] public Health PlayerHealth;
         [HideInInspector] public Animator PlayerAnimator;
+        [HideInInspector] public InputSystem_Actions Input;
         /// <summary>
         /// Максимальная скорость передвижения.
         /// </summary>
@@ -32,9 +33,8 @@ namespace Mechanics
         private bool _jump;
         private Vector2 _move;
         private SpriteRenderer _spriteRenderer;
-        private InputSystem_Actions _input;
         private readonly PlatformerModel _model = Simulation.GetModel<PlatformerModel>();
-
+       
         public Bounds Bounds => Collider2d.bounds;
 
         private void Awake()
@@ -44,14 +44,20 @@ namespace Mechanics
             Collider2d = GetComponent<Collider2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             PlayerAnimator = GetComponent<Animator>();
-            _input = new InputSystem_Actions();
-            _input.Enable();
+            Input = new InputSystem_Actions();
+            Input.Enable();
         }
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            _input.Player.Jump.performed += OnJump;
+            Input.Player.Jump.performed += OnJump;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Input.Player.Jump.performed -= OnJump;
         }
 
         private void OnJump(InputAction.CallbackContext obj)
@@ -72,7 +78,7 @@ namespace Mechanics
         {
             if (ControlEnabled)
             {
-                _move.x = _input.Player.Move.ReadValue<Vector2>().x;
+                _move.x = Input.Player.Move.ReadValue<Vector2>().x;
             }
             else
             {

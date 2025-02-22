@@ -12,15 +12,15 @@ namespace Core
     public static class Simulation
     {
 
-        public static HeapQueue<Event> EventQueue = new HeapQueue<Event>();
-        public static Dictionary<System.Type, Stack<Event>> EventPools = new Dictionary<System.Type, Stack<Event>>();
+        public static HeapQueue<Event> EventQueue = new();
+        public static Dictionary<Type, Stack<Event>> EventPools = new();
 
         /// <summary>
-        /// Создайте новое событие типа T и верните его, но не планируйте его.
+        /// Создать новое событие, но не запланировать.
         /// </summary>
         /// <typeparam name="T">Новое событие</typeparam>
         /// <returns>Новое незапланированное событие</returns>
-        static public T New<T>() where T : Event, new()
+        public static T New<T>() where T : Event, new()
         {
             // создаём новый стэк событий
             Stack<Event> pool;
@@ -39,22 +39,19 @@ namespace Core
             else// если ничего нет, то новое событие возвращаем
                 return new T();
         }
-
-        /// <summary>
-        /// Снимите все ожидающие события и сбросьте галочку на 0.
-        /// </summary>
+/*
         public static void Clear()
         {
             EventQueue.Clear();
         }
-
+*/
         /// <summary>
-        /// Запланируйте событие на будущий тик и верните его.
+        /// Запланировать событие на будущий тик.
         /// </summary>
         /// <returns>Событие.</returns>
         /// <param name="tick">Тик.</param>
         /// <typeparam name="T">Параметр типа события.</typeparam>
-        static public T Schedule<T>(float tick = 0) where T : Event, new()
+        public static T Schedule<T>(float tick = 0) where T : Event, new()
         {
             var ev = New<T>();
             ev.tick = Time.time + tick;
@@ -63,12 +60,12 @@ namespace Core
         }
 
         /// <summary>
-        /// Перенесите существующее событие на следующий тик и верните его.
+        /// Перенести существующее событие на следующий тик.
         /// </summary>
         /// <returns>Событие.</returns>
         /// <param name="tick">Тик.</param>
         /// <typeparam name="T">Параметр типа события.</typeparam>
-        static public T Reschedule<T>(T ev, float tick) where T : Event, new()
+        public static T Reschedule<T>(T ev, float tick) where T : Event, new()
         {
             ev.tick = Time.time + tick;
             EventQueue.Push(ev);
@@ -79,7 +76,7 @@ namespace Core
         /// Возвращает экземпляр симуляционной модели для класса.
         /// </summary>
         /// <typeparam name="T">Новый класс</typeparam>
-        static public T GetModel<T>() where T : class, new()
+        public static T GetModel<T>() where T : class, new()
         {
             return InstanceRegister<T>.instance;
         }
@@ -88,7 +85,7 @@ namespace Core
         /// Устанавливает экземпляр симуляционной модели для класса.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        static public void SetModel<T>(T instance) where T : class, new()
+        public static void SetModel<T>(T instance) where T : class, new()
         {
             InstanceRegister<T>.instance = instance;
         }
@@ -97,7 +94,7 @@ namespace Core
         /// Уничтожает экземпляр симуляционной модели для класса.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        static public void DestroyModel<T>() where T : class, new()
+        public static void DestroyModel<T>() where T : class, new()
         {
             InstanceRegister<T>.instance = null;
         }
@@ -108,7 +105,7 @@ namespace Core
         /// если только события не добавляются из внешней системы с помощью вызова Schedule().
         /// </summary>
         /// <returns></returns>
-        static public int Tick()
+        public static int Tick()
         {
             // кэшириуем время
             var time = Time.time;

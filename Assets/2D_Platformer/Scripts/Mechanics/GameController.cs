@@ -4,17 +4,11 @@ using Model;
 
 namespace Mechanics
 {
-    /// <summary>
-    /// Доисторический синглтон
-    /// </summary>
     public class GameController : MonoBehaviour
     {
         private static GameController Instance { get; set; }
 
-        /*Это поле модели является общедоступным, поэтому его можно изменить в инспекторе.
-        Ссылка на самом деле поступает из InstanceRegister и используется совместно в симуляции и событиях.
-        Unity будет выполнять десериализацию по этой общей ссылке при загрузке сцены,
-        что позволяет удобно настраивать модель в инспекторе.*/
+        /* Экземпляр модели здесь поселился, чтоб прокинуть данные через инспектор.*/
         public PlatformerModel Model = Simulation.GetModel<PlatformerModel>();
 
         private void OnEnable()

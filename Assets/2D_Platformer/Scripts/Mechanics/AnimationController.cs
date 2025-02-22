@@ -30,15 +30,16 @@ namespace Mechanics
         /// Обнуление прыжка
         /// </summary>
         public bool StopJump;
+        
+        public Animator Animator;
 
         private SpriteRenderer _spriteRenderer;
-        private Animator _animator;
         private PlatformerModel _model = Simulation.GetModel<PlatformerModel>();
 
         protected virtual void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
         }
 
         protected override void ComputeVelocity()
@@ -62,8 +63,8 @@ namespace Mechanics
             else if (Move.x < -0.01f)
                 _spriteRenderer.flipX = true;
 
-            _animator.SetBool("grounded", IsGrounded);
-            _animator.SetFloat("velocityX", Mathf.Abs(Velocity.x) / MaxSpeed);
+            //_animator.SetBool("grounded", IsGrounded);
+            Animator.SetFloat("velocity", Mathf.Abs(Velocity.x) / MaxSpeed);
 
             TargetVelocity = Move * MaxSpeed;
         }

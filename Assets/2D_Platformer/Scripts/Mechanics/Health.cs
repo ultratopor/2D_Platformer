@@ -9,47 +9,48 @@ namespace Mechanics
         /// <summary>
         /// Максимальное количество очков жизни для объекта.
         /// </summary>
-        public int maxHP = 1;
+        public int MaxHp = 1;
 
         /// <summary>
         /// Указывает, следует ли считать объект "живым".
         /// </summary>
-        public bool IsAlive => currentHP > 0;
+        public bool IsAlive => _currentHp > 0;
 
-        int currentHP;
+        private int _currentHp;
 
         /// <summary>
-        /// Увеличьте HP объекта.
+        /// Добавляет одну жизнь.
         /// </summary>
         public void Increment()
         {
-            currentHP = Mathf.Clamp(currentHP + 1, 0, maxHP);
+            _currentHp = Mathf.Clamp(_currentHp + 1, 0, MaxHp);
         }
 
         /// <summary>
-        /// Уменьшите количество единиц здоровья объекта. При достижении 0 единиц здоровья будет запущено событие HealthIsZero.
+        /// Уменьшает на одну. При достижении 0 единиц здоровья будет запущено событие HealthIsZero.
         /// </summary>
         public void Decrement()
         {
-            currentHP = Mathf.Clamp(currentHP - 1, 0, maxHP);
-            if (currentHP == 0)
+            _currentHp = Mathf.Clamp(_currentHp - 1, 0, MaxHp);
+            if (_currentHp == 0)
             {
-                var ev = Simulation.Schedule<HealthIsZero>();
-                ev.health = this;
+                // на случай нескольких жизней
+                /*var ev = Simulation.Schedule<HealthIsZero>();
+                ev.Health = this;*/
             }
         }
 
         /// <summary>
-        /// Уменьшайте HP объекта до тех пор, пока HP не достигнет 0.
+        /// Умертвление
         /// </summary>
         public void Die()
         {
-            while (currentHP > 0) Decrement();
+            while (_currentHp > 0) Decrement();
         }
 
-        void Awake()
+        private void Awake()
         {
-            currentHP = maxHP;
+            _currentHp = MaxHp;
         }
     }
 }
